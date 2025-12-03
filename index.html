@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portafolio UPDS - Ing. Sistemas</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --upds-blue: #003399;
+            --upds-accent: #00AEEF;
+            --bg-body: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-main: #333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+        }
+
+        /* --- HEADER DINÁMICO --- */
+        header {
+            background: linear-gradient(135deg, var(--upds-blue), var(--upds-accent));
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+            border-bottom-left-radius: 50% 20px;
+            border-bottom-right-radius: 50% 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Marco de la Foto */
+        .profile-wrapper {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px auto;
+            border-radius: 50%;
+            border: 5px solid rgba(255,255,255,0.3);
+            overflow: hidden; /* Esto recorta la imagen en circulo */
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* La imagen en sí */
+        .profile-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ajusta la foto sin deformarla */
+        }
+
+        /* Icono por defecto si no hay foto aun */
+        .profile-placeholder {
+            font-size: 4rem;
+            color: #ccc;
+        }
+
+        .info-container h1 { margin: 0; font-size: 2.5rem; letter-spacing: 1px; }
+        .info-container p { font-size: 1.1rem; opacity: 0.95; margin-top: 5px; }
+        .uni-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-top: 15px;
+            backdrop-filter: blur(5px);
+        }
+
+        /* --- CONTENIDO / GRID --- */
+        .container {
+            max-width: 1100px;
+            margin: -40px auto 50px auto; /* Sube un poco sobre el header */
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* --- TARJETAS ESTILO 1 (Mejorado) --- */
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+
+        /* Colores de Cabecera según tipo */
+        .card-top {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            position: relative;
+        }
+
+        /* Estilos visuales para diferenciar tareas (puedes cambiarlos) */
+        .style-1 .card-top { background: linear-gradient(45deg, #FF512F, #DD2476); } /* Naranja/Rosa */
+        .style-2 .card-top { background: linear-gradient(45deg, #4776E6, #8E54E9); } /* Azul/Violeta */
+        .style-3 .card-top { background: linear-gradient(45deg, #11998e, #38ef7d); } /* Verde */
+
+        .card-body {
+            padding: 25px;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            color: var(--text-main);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .card-text {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        .card-footer {
+            padding: 20px;
+            border-top: 1px solid #f0f0f0;
+            text-align: center;
+        }
+
+        .btn-action {
+            display: inline-block;
+            padding: 10px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            background-color: var(--upds-blue);
+            color: white;
+            box-shadow: 0 4px 6px rgba(0,33,100,0.2);
+        }
+
+        .btn-action:hover {
+            background-color: var(--upds-accent);
+            transform: scale(1.05);
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="profile-wrapper"><div class="profile-wrapper">
+    <img src="perfil.jpg" alt="Mi Foto">
+</div>
+
+        <div class="info-container">
+            <h1 id="nombre-estudiante">Luis Rodriguez Roca</h1>
+            <p>Ingeniería en Sistemas</p>
+            <div class="uni-badge">
+                <i class="fas fa-university"></i> Universidad Privada Domingo Savio
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="grid-layout">
+
+            <article class="card style-1">
+                <div class="card-top">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Tarea 1</h3>
+                    <p class="card-text">
+                        Espacio reservado para la descripción de la primera tarea asignada.
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn-action" target="_blank">
+                        <i class="fas fa-eye"></i> Ver Tarea
+                    </a>
+                </div>
+            </article>
+
+            <article class="card style-2">
+                <div class="card-top">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Tarea 2</h3>
+                    <p class="card-text">
+                        Espacio reservado para la descripción o detalles de la segunda tarea.
+                    </p>
+                </div>
+                <div class="card-footer">
+                     <a href="#" class="btn-action" target="_blank">
+                        <i class="fas fa-eye"></i> Ver Tarea
+                    </a>
+                </div>
+            </article>
+
+            <article class="card style-3">
+                <div class="card-top">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title">Tarea 3</h3>
+                    <p class="card-text">
+                        Espacio reservado para la descripción del tercer trabajo práctico.
+                    </p>
+                </div>
+                <div class="card-footer">
+                     <a href="#" class="btn-action" target="_blank">
+                        <i class="fas fa-eye"></i> Ver Tarea
+                    </a>
+                </div>
+            </article>
+
+        </div>
+    </div>
+
+    <script>
+        // Si quieres que tu nombre aparezca automáticamente desde JS
+        document.getElementById('nombre-estudiante').innerText = "LUIS ANGEL RODRIGUEZ ROCA";
+    </script>
+
+</body>
+</html>
