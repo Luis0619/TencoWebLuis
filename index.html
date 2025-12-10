@@ -3,247 +3,578 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portafolio UPDS - Ing. Sistemas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <title>Repositorio de Prácticas</title>
     <style>
-        :root {
-            --upds-blue: #003399;
-            --upds-accent: #00AEEF;
-            --bg-body: #f0f2f5;
-            --card-bg: #ffffff;
-            --text-main: #333;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            margin: 0;
-            padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-body);
-            color: var(--text-main);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
         }
 
-        /* --- HEADER DINÁMICO --- */
-        header {
-            background: linear-gradient(135deg, var(--upds-blue), var(--upds-accent));
-            color: white;
-            padding: 3rem 1rem;
-            text-align: center;
-            border-bottom-left-radius: 50% 20px;
-            border-bottom-right-radius: 50% 20px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            position: relative;
+        /* Navbar */
+        .navbar {
+            background: rgba(255,255,255,0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 1.5rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.6s ease;
         }
 
-        /* Marco de la Foto */
-        .profile-wrapper {
-            width: 150px;
-            height: 150px;
-            margin: 0 auto 20px auto;
+        .navbar-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-section {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .profile-image {
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            border: 5px solid rgba(255,255,255,0.3);
-            overflow: hidden; /* Esto recorta la imagen en circulo */
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            object-fit: cover;
+            border: 3px solid #667eea;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
-        /* La imagen en sí */
-        .profile-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ajusta la foto sin deformarla */
+        .profile-image:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(102,126,234,0.5);
         }
 
-        /* Icono por defecto si no hay foto aun */
         .profile-placeholder {
-            font-size: 4rem;
-            color: #ccc;
-        }
-
-        .info-container h1 { margin: 0; font-size: 2.5rem; letter-spacing: 1px; }
-        .info-container p { font-size: 1.1rem; opacity: 0.95; margin-top: 5px; }
-        .uni-badge {
-            background: rgba(255,255,255,0.2);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-top: 15px;
-            backdrop-filter: blur(5px);
-        }
-
-        /* --- CONTENIDO / GRID --- */
-        .container {
-            max-width: 1100px;
-            margin: -40px auto 50px auto; /* Sube un poco sobre el header */
-            padding: 0 20px;
-            position: relative;
-            z-index: 10;
-        }
-
-        .grid-layout {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-
-        /* --- TARJETAS ESTILO 1 (Mejorado) --- */
-        .card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-        }
-
-        /* Colores de Cabecera según tipo */
-        .card-top {
-            height: 100px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
+            font-size: 2rem;
             color: white;
+            border: 3px solid white;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .profile-placeholder:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(102,126,234,0.5);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.2rem;
+        }
+
+        .profile-university {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-left: auto;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: 2px solid #e0e0e0;
+            padding: 0.7rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-color: #667eea;
+            color: white;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.3);
+        }
+
+        /* File input for profile image */
+        #profileImageInput {
+            display: none;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .practice-view {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .practice-view.active {
+            display: block;
+        }
+
+        .practice-card {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            max-width: 900px;
+            margin: 0 auto;
             position: relative;
+            overflow: hidden;
         }
 
-        /* Estilos visuales para diferenciar tareas (puedes cambiarlos) */
-        .style-1 .card-top { background: linear-gradient(45deg, #FF512F, #DD2476); } /* Naranja/Rosa */
-        .style-2 .card-top { background: linear-gradient(45deg, #4776E6, #8E54E9); } /* Azul/Violeta */
-        .style-3 .card-top { background: linear-gradient(45deg, #11998e, #38ef7d); } /* Verde */
-
-        .card-body {
-            padding: 25px;
-            flex-grow: 1;
-            text-align: center;
+        .practice-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
         }
 
-        .card-title {
-            font-size: 1.4rem;
-            color: var(--text-main);
-            margin-bottom: 10px;
+        .practice-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .practice-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102,126,234,0.4);
+        }
+
+        .practice-title {
+            font-size: 2rem;
+            color: #333;
             font-weight: 700;
         }
 
-        .card-text {
+        .practice-description {
             color: #666;
-            font-size: 0.95rem;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
         }
 
-        .card-footer {
-            padding: 20px;
-            border-top: 1px solid #f0f0f0;
+        .section-title {
+            font-size: 1.3rem;
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .files-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .file-item {
+            background: #f8f9fa;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .file-item:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+            transform: translateX(8px);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .file-icon {
+            font-size: 1.5rem;
+        }
+
+        .file-name {
+            color: #333;
+            font-weight: 500;
+        }
+
+        .upload-area {
+            border: 3px dashed #667eea;
+            border-radius: 15px;
+            padding: 3rem;
             text-align: center;
+            background: #f8f9fa;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 1.5rem;
         }
 
-        .btn-action {
-            display: inline-block;
-            padding: 10px 25px;
-            border-radius: 50px;
-            text-decoration: none;
+        .upload-area:hover {
+            background: #e9ecef;
+            border-color: #764ba2;
+            transform: scale(1.02);
+        }
+
+        .upload-area.dragover {
+            background: #e9ecef;
+            border-color: #764ba2;
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102,126,234,0.2);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .upload-text {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        input[type="file"].file-input {
+            display: none;
+        }
+
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
             font-weight: 600;
             transition: all 0.3s;
-            background-color: var(--upds-blue);
-            color: white;
-            box-shadow: 0 4px 6px rgba(0,33,100,0.2);
         }
 
-        .btn-action:hover {
-            background-color: var(--upds-accent);
+        .delete-btn:hover {
+            background: #c0392b;
             transform: scale(1.05);
         }
 
+        .empty-state {
+            color: #999;
+            font-style: italic;
+            text-align: center;
+            padding: 2rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-content {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .nav-tabs {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .tab-btn {
+                flex: 1;
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .practice-card {
+                padding: 1.5rem;
+            }
+
+            .practice-title {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
-
-    <header>
-        <div class="profile-wrapper"><div class="profile-wrapper">
-    <img src="perfil.jpg" alt="Mi Foto">
-</div>
-
-        <div class="info-container">
-            <h1 id="nombre-estudiante">Luis Rodriguez Roca</h1>
-            <p>Ingeniería en Sistemas</p>
-            <div class="uni-badge">
-                <i class="fas fa-university"></i> Universidad Privada Domingo Savio
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <div class="profile-section">
+                <div class="profile-placeholder" id="profileImageContainer" onclick="document.getElementById('profileImageInput').click()">
+                    👤
+                </div>
+                <input type="file" id="profileImageInput" accept="image/*" onchange="handleProfileImage(event)">
+                <div class="profile-info">
+                    <div class="profile-name" contenteditable="true" id="profileName">Luis Rodriguez</div>
+                    <div class="profile-university" contenteditable="true" id="profileUniversity">Universidad Privada Domingo Savio</div>
+                </div>
+            </div>
+            <div class="nav-tabs">
+                <button class="tab-btn active" onclick="switchTab(1)">Práctica 2</button>
+                <button class="tab-btn" onclick="switchTab(2)">Práctica 3</button>
+                <button class="tab-btn" onclick="switchTab(3)">Proyecto final</button>
             </div>
         </div>
-    </header>
+    </nav>
 
+    <!-- Main Content -->
     <div class="container">
-        <div class="grid-layout">
+        <!-- Práctica 1 -->
+        <div class="practice-view active" id="practice1">
+            <div class="practice-card">
+                <div class="practice-header">
+                    <div class="practice-number">1</div>
+                    <div class="practice-title">Práctica 2</div>
+                </div>
+                <div class="practice-description" contenteditable="true">
+                    Primera práctica del curso. Haz clic para editar la descripción.
+                </div>
 
-            <article class="card style-1">
-                <div class="card-top">
-                    <i class="fas fa-laptop-code"></i>
+                <div class="section-title">📎 Archivos subidos</div>
+                <div class="files-list" id="fileList1">
+                    <div class="empty-state">No hay archivos subidos aún</div>
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Tarea 1</h3>
-                    <p class="card-text">
-                        Espacio reservado para la descripción de la primera tarea asignada.
-                    </p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="btn-action" target="_blank">
-                        <i class="fas fa-eye"></i> Ver Tarea
-                    </a>
-                </div>
-            </article>
 
-            <article class="card style-2">
-                <div class="card-top">
-                    <i class="fas fa-database"></i>
+                <div class="upload-area" id="uploadArea1" onclick="document.getElementById('fileInput1').click()">
+                    <div class="upload-icon">☁️</div>
+                    <div class="upload-text">Haz clic o arrastra archivos aquí para subirlos</div>
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Tarea 2</h3>
-                    <p class="card-text">
-                        Espacio reservado para la descripción o detalles de la segunda tarea.
-                    </p>
-                </div>
-                <div class="card-footer">
-                     <a href="#" class="btn-action" target="_blank">
-                        <i class="fas fa-eye"></i> Ver Tarea
-                    </a>
-                </div>
-            </article>
+                <input type="file" class="file-input" id="fileInput1" multiple onchange="handleFiles(event, 1)">
+            </div>
+        </div>
 
-            <article class="card style-3">
-                <div class="card-top">
-                    <i class="fas fa-file-alt"></i>
+        <!-- Práctica 2 -->
+        <div class="practice-view" id="practice2">
+            <div class="practice-card">
+                <div class="practice-header">
+                    <div class="practice-number">2</div>
+                    <div class="practice-title">Práctica 3</div>
                 </div>
-                <div class="card-body">
-                    <h3 class="card-title">Tarea 3</h3>
-                    <p class="card-text">
-                        Espacio reservado para la descripción del tercer trabajo práctico.
-                    </p>
+                <div class="practice-description" contenteditable="true">
+                    Segunda práctica del curso. Haz clic para editar la descripción.
                 </div>
-                <div class="card-footer">
-                     <a href="#" class="btn-action" target="_blank">
-                        <i class="fas fa-eye"></i> Ver Tarea
-                    </a>
-                </div>
-            </article>
 
+                <div class="section-title">📎 Archivos subidos</div>
+                <div class="files-list" id="fileList2">
+                    <div class="empty-state">No hay archivos subidos aún</div>
+                </div>
+
+                <div class="upload-area" id="uploadArea2" onclick="document.getElementById('fileInput2').click()">
+                    <div class="upload-icon">☁️</div>
+                    <div class="upload-text">Haz clic o arrastra archivos aquí para subirlos</div>
+                </div>
+                <input type="file" class="file-input" id="fileInput2" multiple onchange="handleFiles(event, 2)">
+            </div>
+        </div>
+
+        <!-- Práctica 3 -->
+        <div class="practice-view" id="practice3">
+            <div class="practice-card">
+                <div class="practice-header">
+                    <div class="practice-number">3</div>
+                    <div class="practice-title">Proywcto Final</div>
+                </div>
+                <div class="practice-description" contenteditable="true">
+                    Tercera práctica del curso. Haz clic para editar la descripción.
+                </div>
+
+                <div class="section-title">📎 Archivos subidos</div>
+                <div class="files-list" id="fileList3">
+                    <div class="empty-state">No hay archivos subidos aún</div>
+                </div>
+
+                <div class="upload-area" id="uploadArea3" onclick="document.getElementById('fileInput3').click()">
+                    <div class="upload-icon">☁️</div>
+                    <div class="upload-text">Haz clic o arrastra archivos aquí para subirlos</div>
+                </div>
+                <input type="file" class="file-input" id="fileInput3" multiple onchange="handleFiles(event, 3)">
+            </div>
         </div>
     </div>
 
     <script>
-        // Si quieres que tu nombre aparezca automáticamente desde JS
-        document.getElementById('nombre-estudiante').innerText = "LUIS ANGEL RODRIGUEZ ROCA";
-    </script>
+        const practices = {
+            1: { files: [] },
+            2: { files: [] },
+            3: { files: [] }
+        };
 
+        function switchTab(practiceNum) {
+            // Update tabs
+            const tabs = document.querySelectorAll('.tab-btn');
+            tabs.forEach((tab, idx) => {
+                tab.classList.toggle('active', idx + 1 === practiceNum);
+            });
+
+            // Update views
+            const views = document.querySelectorAll('.practice-view');
+            views.forEach((view, idx) => {
+                view.classList.toggle('active', idx + 1 === practiceNum);
+            });
+        }
+
+        function handleProfileImage(event) {
+            const file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const container = document.getElementById('profileImageContainer');
+                    container.innerHTML = '';
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'profile-image';
+                    img.onclick = () => document.getElementById('profileImageInput').click();
+                    container.appendChild(img);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function setupDragAndDrop() {
+            [1, 2, 3].forEach(num => {
+                const area = document.getElementById(`uploadArea${num}`);
+                
+                ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+                    area.addEventListener(eventName, preventDefaults, false);
+                });
+
+                ['dragenter', 'dragover'].forEach(eventName => {
+                    area.addEventListener(eventName, () => area.classList.add('dragover'), false);
+                });
+
+                ['dragleave', 'drop'].forEach(eventName => {
+                    area.addEventListener(eventName, () => area.classList.remove('dragover'), false);
+                });
+
+                area.addEventListener('drop', (e) => {
+                    const files = e.dataTransfer.files;
+                    handleFilesFromDrop(files, num);
+                }, false);
+            });
+        }
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function handleFiles(event, practiceNum) {
+            const files = event.target.files;
+            handleFilesFromDrop(files, practiceNum);
+        }
+
+        function handleFilesFromDrop(files, practiceNum) {
+            const fileArray = Array.from(files);
+            fileArray.forEach(file => {
+                practices[practiceNum].files.push({
+                    name: file.name,
+                    size: file.size,
+                    type: file.type
+                });
+            });
+            updateFileList(practiceNum);
+        }
+
+        function updateFileList(practiceNum) {
+            const fileList = document.getElementById(`fileList${practiceNum}`);
+            const practice = practices[practiceNum];
+            
+            if (practice.files.length === 0) {
+                fileList.innerHTML = '<div class="empty-state">No hay archivos subidos aún</div>';
+            } else {
+                fileList.innerHTML = practice.files.map((file, idx) => `
+                    <div class="file-item">
+                        <div class="file-info">
+                            <span class="file-icon">📄</span>
+                            <span class="file-name">${file.name}</span>
+                        </div>
+                        <button class="delete-btn" onclick="deleteFile(${practiceNum}, ${idx})">Eliminar</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function deleteFile(practiceNum, fileIndex) {
+            practices[practiceNum].files.splice(fileIndex, 1);
+            updateFileList(practiceNum);
+        }
+
+        setupDragAndDrop();
+    </script>
 </body>
 </html>
