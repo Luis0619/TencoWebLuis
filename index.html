@@ -90,11 +90,25 @@
             font-weight: 700;
             color: #333;
             margin-bottom: 0.2rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+
+        .profile-name:hover {
+            background: #f0f0f0;
         }
 
         .profile-university {
             color: #666;
             font-size: 0.95rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+
+        .profile-university:hover {
+            background: #f0f0f0;
         }
 
         .nav-tabs {
@@ -128,7 +142,6 @@
             box-shadow: 0 4px 15px rgba(102,126,234,0.3);
         }
 
-        /* File input for profile image */
         #profileImageInput {
             display: none;
         }
@@ -203,6 +216,13 @@
             margin-bottom: 2rem;
             line-height: 1.8;
             font-size: 1.1rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background 0.2s;
+        }
+
+        .practice-description:hover {
+            background: #f8f9fa;
         }
 
         .section-title {
@@ -243,15 +263,26 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            flex: 1;
         }
 
         .file-icon {
             font-size: 1.5rem;
         }
 
+        .file-details {
+            flex: 1;
+        }
+
         .file-name {
             color: #333;
             font-weight: 500;
+            display: block;
+        }
+
+        .file-size {
+            color: #999;
+            font-size: 0.85rem;
         }
 
         .upload-area {
@@ -310,6 +341,24 @@
             transform: scale(1.05);
         }
 
+        .download-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-left: 0.5rem;
+        }
+
+        .download-btn:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+
         .empty-state {
             color: #999;
             font-style: italic;
@@ -318,6 +367,31 @@
             background: #f8f9fa;
             border-radius: 12px;
             margin-bottom: 2rem;
+        }
+
+        .status-message {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: none;
+            animation: slideIn 0.3s ease;
+            z-index: 2000;
+        }
+
+        .status-message.show {
+            display: block;
+        }
+
+        .status-message.success {
+            border-left: 4px solid #27ae60;
+        }
+
+        .status-message.error {
+            border-left: 4px solid #e74c3c;
         }
 
         @keyframes slideDown {
@@ -342,6 +416,17 @@
             }
         }
 
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
         @media (max-width: 768px) {
             .navbar-content {
                 flex-direction: column;
@@ -352,10 +437,10 @@
                 margin-left: 0;
                 width: 100%;
                 justify-content: center;
+                flex-wrap: wrap;
             }
 
             .tab-btn {
-                flex: 1;
                 padding: 0.6rem 1rem;
                 font-size: 0.9rem;
             }
@@ -371,6 +456,9 @@
     </style>
 </head>
 <body>
+    <!-- Status Message -->
+    <div class="status-message" id="statusMessage"></div>
+
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-content">
@@ -385,129 +473,238 @@
                 </div>
             </div>
             <div class="nav-tabs">
-                <button class="tab-btn active" onclick="switchTab(1)">Práctica 2</button>
-                <button class="tab-btn" onclick="switchTab(2)">Práctica 3</button>
-                <button class="tab-btn" onclick="switchTab(3)">Proyecto final</button>
+                <button class="tab-btn active" onclick="switchTab(2)">Práctica 2</button>
+                <button class="tab-btn" onclick="switchTab(3)">Práctica 3</button>
+                <button class="tab-btn" onclick="switchTab('final')">Proyecto final</button>
             </div>
         </div>
     </nav>
 
     <!-- Main Content -->
-    <div class="container">
-        <!-- Práctica 1 -->
-        <div class="practice-view active" id="practice1">
-            <div class="practice-card">
-                <div class="practice-header">
-                    <div class="practice-number">1</div>
-                    <div class="practice-title">Práctica 2</div>
-                </div>
-                <div class="practice-description" contenteditable="true">
-                    Primera práctica del curso. Haz clic para editar la descripción.
-                </div>
-
-                <div class="section-title">📎 Archivos subidos</div>
-                <div class="files-list" id="fileList1">
-                    <div class="empty-state">No hay archivos subidos aún</div>
-                </div>
-
-                <div class="upload-area" id="uploadArea1" onclick="document.getElementById('fileInput1').click()">
-                    <div class="upload-icon">☁️</div>
-                    <div class="upload-text">Haz clic o arrastra archivos aquí para subirlos</div>
-                </div>
-                <input type="file" class="file-input" id="fileInput1" multiple onchange="handleFiles(event, 1)">
-            </div>
-        </div>
-
-        <!-- Práctica 2 -->
-        <div class="practice-view" id="practice2">
-            <div class="practice-card">
-                <div class="practice-header">
-                    <div class="practice-number">2</div>
-                    <div class="practice-title">Práctica 3</div>
-                </div>
-                <div class="practice-description" contenteditable="true">
-                    Segunda práctica del curso. Haz clic para editar la descripción.
-                </div>
-
-                <div class="section-title">📎 Archivos subidos</div>
-                <div class="files-list" id="fileList2">
-                    <div class="empty-state">No hay archivos subidos aún</div>
-                </div>
-
-                <div class="upload-area" id="uploadArea2" onclick="document.getElementById('fileInput2').click()">
-                    <div class="upload-icon">☁️</div>
-                    <div class="upload-text">Haz clic o arrastra archivos aquí para subirlos</div>
-                </div>
-                <input type="file" class="file-input" id="fileInput2" multiple onchange="handleFiles(event, 2)">
-            </div>
-        </div>
-
-        <!-- Práctica 3 -->
-        <div class="practice-view" id="practice3">
-            <div class="practice-card">
-                <div class="practice-header">
-                    <div class="practice-number">3</div>
-                    <div class="practice-title">Proywcto Final</div>
-                </div>
-                <div class="practice-description" contenteditable="true">
-                    Tercera práctica del curso. Haz clic para editar la descripción.
-                </div>
-
-                <div class="section-title">📎 Archivos subidos</div>
-                <div class="files-list" id="fileList3">
-                    <div class="empty-state">No hay archivos subidos aún</div>
-                </div>
-
-                <div class="upload-area" id="uploadArea3" onclick="document.getElementById('fileInput3').click()">
-                    <div class="upload-icon">☁️</div>
-                    <div class="upload-text">Haz clic o arrastra archivos aquí para subirlos</div>
-                </div>
-                <input type="file" class="file-input" id="fileInput3" multiple onchange="handleFiles(event, 3)">
-            </div>
-        </div>
-    </div>
+    <div class="container" id="mainContainer"></div>
 
     <script>
-        const practices = {
-            1: { files: [] },
-            2: { files: [] },
-            3: { files: [] }
+        const practiceConfig = {
+            2: { number: '2', title: 'Práctica 2', description: 'Segunda práctica del curso. Haz clic para editar la descripción.' },
+            3: { number: '3', title: 'Práctica 3', description: 'Tercera práctica del curso. Haz clic para editar la descripción.' },
+            'final': { number: '🎓', title: 'Proyecto final', description: 'Proyecto final del curso. Haz clic para editar la descripción.' }
         };
 
-        function switchTab(practiceNum) {
-            // Update tabs
-            const tabs = document.querySelectorAll('.tab-btn');
-            tabs.forEach((tab, idx) => {
-                tab.classList.toggle('active', idx + 1 === practiceNum);
+        let practices = {};
+        Object.keys(practiceConfig).forEach(key => {
+            practices[key] = { files: [], description: practiceConfig[key].description };
+        });
+
+        let profileData = {
+            name: 'Luis Rodriguez',
+            university: 'Universidad Privada Domingo Savio',
+            image: null
+        };
+
+        // Storage functions using localStorage
+        function saveToStorage(key, data) {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+                return true;
+            } catch (e) {
+                console.error('Error saving to localStorage:', e);
+                return false;
+            }
+        }
+
+        function loadFromStorage(key) {
+            try {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : null;
+            } catch (e) {
+                console.error('Error loading from localStorage:', e);
+                return null;
+            }
+        }
+
+        // Initialize
+        function init() {
+            loadAllData();
+            renderPractices();
+            setupEventListeners();
+        }
+
+        // Load all data
+        function loadAllData() {
+            // Load profile
+            const savedProfile = loadFromStorage('profile-data');
+            if (savedProfile) {
+                profileData = savedProfile;
+                document.getElementById('profileName').textContent = profileData.name;
+                document.getElementById('profileUniversity').textContent = profileData.university;
+                if (profileData.image) {
+                    const container = document.getElementById('profileImageContainer');
+                    container.innerHTML = `<img src="${profileData.image}" class="profile-image" onclick="document.getElementById('profileImageInput').click()">`;
+                }
+            }
+
+            // Load practices
+            Object.keys(practiceConfig).forEach(key => {
+                const savedPractice = loadFromStorage(`practice-${key}`);
+                if (savedPractice) {
+                    practices[key] = savedPractice;
+                }
+            });
+        }
+
+        // Save profile
+        function saveProfile() {
+            if (saveToStorage('profile-data', profileData)) {
+                showStatus('Perfil guardado correctamente ✓', 'success');
+            } else {
+                showStatus('Error al guardar el perfil', 'error');
+            }
+        }
+
+        // Save practice
+        function savePractice(practiceKey) {
+            if (saveToStorage(`practice-${practiceKey}`, practices[practiceKey])) {
+                showStatus('Cambios guardados ✓', 'success');
+            } else {
+                showStatus('Error al guardar', 'error');
+            }
+        }
+
+        // Render practices
+        function renderPractices() {
+            const container = document.getElementById('mainContainer');
+            container.innerHTML = '';
+
+            let isFirst = true;
+            Object.keys(practiceConfig).forEach(key => {
+                const config = practiceConfig[key];
+                const practiceView = document.createElement('div');
+                practiceView.className = `practice-view ${isFirst ? 'active' : ''}`;
+                practiceView.id = `practice${key}`;
+                isFirst = false;
+                
+                practiceView.innerHTML = `
+                    <div class="practice-card">
+                        <div class="practice-header">
+                            <div class="practice-number">${config.number}</div>
+                            <div class="practice-title">${config.title}</div>
+                        </div>
+                        <div class="practice-description" contenteditable="true" id="description${key}">
+                            ${practices[key].description}
+                        </div>
+
+                        <div class="section-title">📎 Archivos subidos</div>
+                        <div class="files-list" id="fileList${key}">
+                            ${renderFileList(key)}
+                        </div>
+
+                        <div class="upload-area" id="uploadArea${key}" onclick="document.getElementById('fileInput${key}').click()">
+                            <div class="upload-icon">☁️</div>
+                            <div class="upload-text">Haz clic o arrastra archivos aquí para subirlos</div>
+                        </div>
+                        <input type="file" class="file-input" id="fileInput${key}" multiple onchange="handleFiles(event, '${key}')">
+                    </div>
+                `;
+                
+                container.appendChild(practiceView);
+            });
+        }
+
+        function renderFileList(practiceKey) {
+            const practice = practices[practiceKey];
+            if (!practice.files || practice.files.length === 0) {
+                return '<div class="empty-state">No hay archivos subidos aún</div>';
+            }
+            
+            return practice.files.map((file, idx) => `
+                <div class="file-item">
+                    <div class="file-info">
+                        <span class="file-icon">📄</span>
+                        <div class="file-details">
+                            <span class="file-name">${file.name}</span>
+                            <span class="file-size">${formatFileSize(file.size)}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="download-btn" onclick="downloadFile('${practiceKey}', ${idx})">Descargar</button>
+                        <button class="delete-btn" onclick="deleteFile('${practiceKey}', ${idx})">Eliminar</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+        }
+
+        function setupEventListeners() {
+            // Profile name
+            document.getElementById('profileName').addEventListener('blur', function() {
+                profileData.name = this.textContent;
+                saveProfile();
             });
 
-            // Update views
+            // Profile university
+            document.getElementById('profileUniversity').addEventListener('blur', function() {
+                profileData.university = this.textContent;
+                saveProfile();
+            });
+
+            // Descriptions
+            Object.keys(practiceConfig).forEach(key => {
+                const descEl = document.getElementById(`description${key}`);
+                if (descEl) {
+                    descEl.addEventListener('blur', function() {
+                        practices[key].description = this.textContent;
+                        savePractice(key);
+                    });
+                }
+            });
+
+            // Drag and drop
+            setupDragAndDrop();
+        }
+
+        function switchTab(practiceKey) {
+            const tabs = document.querySelectorAll('.tab-btn');
+            const keys = Object.keys(practiceConfig);
+            tabs.forEach((tab, idx) => {
+                tab.classList.toggle('active', keys[idx] == practiceKey);
+            });
+
             const views = document.querySelectorAll('.practice-view');
-            views.forEach((view, idx) => {
-                view.classList.toggle('active', idx + 1 === practiceNum);
+            views.forEach((view) => {
+                view.classList.toggle('active', view.id === `practice${practiceKey}`);
             });
         }
 
         function handleProfileImage(event) {
             const file = event.target.files[0];
             if (file && file.type.startsWith('image/')) {
+                if (file.size > 500 * 1024) {
+                    showStatus('La imagen es muy grande. Máximo 500KB', 'error');
+                    return;
+                }
+
                 const reader = new FileReader();
                 reader.onload = function(e) {
+                    profileData.image = e.target.result;
                     const container = document.getElementById('profileImageContainer');
-                    container.innerHTML = '';
-                    const img = document.createElement('img');
-                    img.src = e.target.result;
-                    img.className = 'profile-image';
-                    img.onclick = () => document.getElementById('profileImageInput').click();
-                    container.appendChild(img);
+                    container.innerHTML = `<img src="${e.target.result}" class="profile-image" onclick="document.getElementById('profileImageInput').click()">`;
+                    saveProfile();
                 };
                 reader.readAsDataURL(file);
             }
         }
 
         function setupDragAndDrop() {
-            [1, 2, 3].forEach(num => {
-                const area = document.getElementById(`uploadArea${num}`);
+            Object.keys(practiceConfig).forEach(key => {
+                const area = document.getElementById(`uploadArea${key}`);
+                if (!area) return;
                 
                 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                     area.addEventListener(eventName, preventDefaults, false);
@@ -523,7 +720,7 @@
 
                 area.addEventListener('drop', (e) => {
                     const files = e.dataTransfer.files;
-                    handleFilesFromDrop(files, num);
+                    handleFilesFromDrop(files, key);
                 }, false);
             });
         }
@@ -533,48 +730,86 @@
             e.stopPropagation();
         }
 
-        function handleFiles(event, practiceNum) {
+        function handleFiles(event, practiceKey) {
             const files = event.target.files;
-            handleFilesFromDrop(files, practiceNum);
+            handleFilesFromDrop(files, practiceKey);
+            event.target.value = '';
         }
 
-        function handleFilesFromDrop(files, practiceNum) {
+        function handleFilesFromDrop(files, practiceKey) {
             const fileArray = Array.from(files);
+            const maxSize = 2 * 1024 * 1024; // 2MB
+            
+            let filesProcessed = 0;
+            let filesTotal = fileArray.length;
+
             fileArray.forEach(file => {
-                practices[practiceNum].files.push({
-                    name: file.name,
-                    size: file.size,
-                    type: file.type
-                });
+                if (file.size > maxSize) {
+                    showStatus(`${file.name} es muy grande. Máximo 2MB`, 'error');
+                    filesTotal--;
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    practices[practiceKey].files.push({
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        data: e.target.result
+                    });
+                    
+                    filesProcessed++;
+                    if (filesProcessed === filesTotal) {
+                        savePractice(practiceKey);
+                        updateFileList(practiceKey);
+                    }
+                };
+                reader.onerror = function() {
+                    showStatus(`Error al leer ${file.name}`, 'error');
+                    filesTotal--;
+                };
+                reader.readAsDataURL(file);
             });
-            updateFileList(practiceNum);
         }
 
-        function updateFileList(practiceNum) {
-            const fileList = document.getElementById(`fileList${practiceNum}`);
-            const practice = practices[practiceNum];
-            
-            if (practice.files.length === 0) {
-                fileList.innerHTML = '<div class="empty-state">No hay archivos subidos aún</div>';
-            } else {
-                fileList.innerHTML = practice.files.map((file, idx) => `
-                    <div class="file-item">
-                        <div class="file-info">
-                            <span class="file-icon">📄</span>
-                            <span class="file-name">${file.name}</span>
-                        </div>
-                        <button class="delete-btn" onclick="deleteFile(${practiceNum}, ${idx})">Eliminar</button>
-                    </div>
-                `).join('');
+        function updateFileList(practiceKey) {
+            const fileList = document.getElementById(`fileList${practiceKey}`);
+            if (fileList) {
+                fileList.innerHTML = renderFileList(practiceKey);
             }
         }
 
-        function deleteFile(practiceNum, fileIndex) {
-            practices[practiceNum].files.splice(fileIndex, 1);
-            updateFileList(practiceNum);
+        function deleteFile(practiceKey, fileIndex) {
+            if (confirm('¿Estás seguro de eliminar este archivo?')) {
+                practices[practiceKey].files.splice(fileIndex, 1);
+                savePractice(practiceKey);
+                updateFileList(practiceKey);
+            }
         }
 
-        setupDragAndDrop();
+        function downloadFile(practiceKey, fileIndex) {
+            const file = practices[practiceKey].files[fileIndex];
+            const link = document.createElement('a');
+            link.href = file.data;
+            link.download = file.name;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.textContent = message;
+            statusEl.className = `status-message show ${type}`;
+            
+            setTimeout(() => {
+                statusEl.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize
+        init();
     </script>
 </body>
 </html>
